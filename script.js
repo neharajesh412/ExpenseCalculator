@@ -62,21 +62,37 @@ function updateSum() {
 const r = '\u20B9';
 function shareCalculator(bValue, dValue, lValue, sbValue, sdValue, slValue){
     let c=[];
+
     let S1=bValue*35/sbValue;
-    S1=Math.round(S1 * 100) / 100
+    let S2=lValue*60/slValue;
+    let S3=dValue*35/sdValue;
+
+    S1=Math.round(S1 * 100) / 100;
+    S2=Math.round(S2 * 100) / 100;
+    S3=Math.round(S3 * 100) / 100;
+    
+    if(lValue>0 && bValue==0){
+        S3+=5/sdValue
+    }
+    if(lValue>0 && dValue==0){
+        S1+=5/sbValue
+    }
+
+    let S=0;
     if(isFinite(S1)){
         c.push("Breakfast: "+ r + S1 +" ");
+        S+=S1*sbValue;
     }
-    let S3=dValue*35/sdValue;
-    let S2=lValue*60/slValue;
-    S2=Math.round(S2 * 100) / 100
-    S3=Math.round(S3 * 100) / 100
     if(isFinite(S2)){
         c.push("Lunch: "+ r + S2 +" ");
+        S+=S2*slValue;
     }
     if(isFinite(S3)){
         c.push("Dinner: "+ r + S3 +" ")
+        S+=S3*sdValue;
     }
+    S=S.toFixed(2);
+    c.push("Total: "+ r + S +" ")
     console.log("bprice:", S1,"lprice:", S3,"dprice:",S2);
     return(c)
 }
